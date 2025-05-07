@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+
+
+  <video autoplay muted loop id="bg-video">
+    <source id="video-source" src="https://videos.pexels.com/video-files/856985/856985-hd_1920_1080_30fps.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+
+  <div class="container">
+    <div class="todo-app">
+        <h2>To-Do List <img src="images/icon.png" alt="icon"></h2>
+        
+        <!-- Input Section -->
+        <div class="row">
+            <input type="text" id="input-box" placeholder="What do you need to do?" onkeydown="if(event.key === 'Enter'){addTask()}">
+            <button onclick="addTask()">Add</button>
+        </div>
+        
+        <!-- Task List Section -->
+        <div class="task-list">
+            <!-- Tasks will be dynamically inserted here -->
+        </div>
+        
+    </div>
+  </div>
+
+  <script>
+    // Function to add a task
+    function addTask() {
+        const inputBox = document.getElementById('input-box');
+        const taskText = inputBox.value.trim();
+
+        if (taskText === "") return; // Don't add empty tasks
+        
+        const taskList = document.querySelector('.task-list');
+        
+        // Create a new task element
+        const taskElement = document.createElement('div');
+        taskElement.classList.add('task');
+        
+        // Add task text
+        taskElement.innerHTML = `
+            <span class="task-text">${taskText}</span>
+            <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+            <button class="complete-btn" onclick="completeTask(this)">✔</button>
+        `;
+        
+        // Append the task to the task list
+        taskList.appendChild(taskElement);
+        
+        // Clear input box after adding the task
+        inputBox.value = "";
+    }
+
+    // Function to delete a task
+    function deleteTask(button) {
+        const task = button.parentElement;
+        task.remove();
+    }
+
+    // Function to mark a task as completed
+    function completeTask(button) {
+        const task = button.parentElement;
+        task.classList.toggle('completed');
+    }
+  </script>
+</body>
+</html>
